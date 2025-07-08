@@ -4,10 +4,11 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToolbarModule } from 'primeng/toolbar';
+import { StoreManagementComponent } from '../store-management/store-management.component';
 
 @Component({
   selector: 'store-toolbar',
-  imports: [CommonModule, ToolbarModule, ButtonModule, ConfirmDialogModule],
+  imports: [CommonModule, ToolbarModule, ButtonModule, ConfirmDialogModule, StoreManagementComponent],
   providers: [ConfirmationService, MessageService],
   templateUrl: './store-toolbar.component.html',
   styleUrl: './store-toolbar.component.scss'

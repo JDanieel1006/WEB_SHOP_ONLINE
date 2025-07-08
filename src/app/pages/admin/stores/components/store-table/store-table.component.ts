@@ -12,6 +12,7 @@ import { StoreService } from '../../../../../services/Store/Store.service';
 import { ModelCustomerTransferService } from '../../../customers/services/ModelCustomerTransfer';
 import { ConfirmDialogDto } from '../../../../../model/Shared/Dialog/ConfirmDialogDto.model';
 import { Severity } from '../../../../../enums/Severety/Severity.enum';
+import { ModelStoreTransferService } from '../../services/ModelStoreTransfer.service';
 
 @Component({
   selector: 'store-table',
@@ -33,7 +34,7 @@ export class StoreTableComponent {
     private storeService = inject(StoreService);
     private messageService = inject(MessageService);
     private confirmDialogService = inject(ConfirmDialogService);
-    private modelTransferService = inject(ModelCustomerTransferService);
+    private modelStoreTransferService = inject(ModelStoreTransferService);
 
     ngOnInit(): void {
         //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -53,7 +54,7 @@ export class StoreTableComponent {
     }
 
     public Edit(customer: StoreDto) {
-        this.modelTransferService.triggerRefresh(customer);
+        this.modelStoreTransferService.triggerRefresh(customer);
     }
 
     public Delete(storeId: number) {
