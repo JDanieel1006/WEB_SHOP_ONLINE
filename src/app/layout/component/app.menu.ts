@@ -26,6 +26,9 @@ export class AppMenu {
             {
                 label: 'Administración',
                 items: [{ label: 'Clientes', icon: 'pi pi-fw pi-users', routerLink: ['customers'] }]
+            },
+            {
+                items: [{ label: 'Tiendas', icon: 'pi pi-fw pi-shop', routerLink: ['stores'] }]
             }
         ];
     }

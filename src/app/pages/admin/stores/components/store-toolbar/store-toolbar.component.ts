@@ -1,19 +1,18 @@
-import { Component } from '@angular/core';
-import { ToolbarModule } from 'primeng/toolbar';
-import { ButtonModule } from 'primeng/button';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CommonModule } from '@angular/common';
-import { CustomersManagementComponent } from '../customers-management/customers-management.component';
+import { Component } from '@angular/core';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToolbarModule } from 'primeng/toolbar';
 
 @Component({
-  selector: 'customers-toolbar',
-  imports: [CommonModule, ToolbarModule, ButtonModule, ConfirmDialogModule, CustomersManagementComponent],
+  selector: 'store-toolbar',
+  imports: [CommonModule, ToolbarModule, ButtonModule, ConfirmDialogModule],
   providers: [ConfirmationService, MessageService],
-  templateUrl: './customers-toolbar.component.html',
-  styleUrl: './customers-toolbar.component.scss'
+  templateUrl: './store-toolbar.component.html',
+  styleUrl: './store-toolbar.component.scss'
 })
-export class CustomersToolbarComponent {
+export class StoreToolbarComponent {
 
     /**
      * Global variables
