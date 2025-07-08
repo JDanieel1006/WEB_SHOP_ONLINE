@@ -29,6 +29,9 @@ export class AppMenu {
             },
             {
                 items: [{ label: 'Tiendas', icon: 'pi pi-fw pi-shop', routerLink: ['stores'] }]
+            },
+            {
+                items: [{ label: 'Articulos', icon: 'pi pi-fw pi-shopping-cart', routerLink: ['articles'] }]
             }
         ];
     }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-article-table',
+  selector: 'article-table',
   imports: [],
   templateUrl: './article-table.component.html',
   styleUrl: './article-table.component.scss'
