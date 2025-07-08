@@ -1,1 +1,71 @@
-<p>customers-management works!</p>
+<p-toast></p-toast>
+
+<p-dialog [(visible)]="visible" [style]="{ width: '450px' }" [modal]="true" closable="false" header="Formulario de clientes">
+    <ng-template #content>
+        <div class="flex flex-col gap-6">
+            <form [formGroup]="userForm" class="p-fluid">
+
+                <div class="items-center gap-4 mb-4">
+                    <!-- Name -->
+                    <div class="w-full">
+                        <p-floatlabel variant="in">
+                            <input pInputText id="name" formControlName="name" autocomplete="off" required autofocus
+                                fluid
+                                [ngClass]="{'ng-invalid ng-dirty': userForm.get('name')?.invalid && (userForm.get('name')?.touched || userForm.get('name')?.dirty)}" />
+                            <label for="name"> Nombre(s) </label>
+                        </p-floatlabel>
+                        <small class="error-message-validator" *ngIf="userForm.get('name')?.hasError('required') &&
+                        (userForm.get('name')?.touched || userForm.get('name')?.dirty)">
+                            Nombre(s) de cliente es requerido
+                        </small>
+                    </div>
+
+
+                </div>
+
+                <div class="items-center gap-4 mb-4">
+                     <!-- LastName -->
+                    <div class="w-full">
+                        <p-floatlabel variant="in">
+                            <input pInputText id="lastName" formControlName="lastName" autocomplete="off" required fluid
+                                [ngClass]="{'ng-invalid ng-dirty': userForm.get('lastName')?.invalid && (userForm.get('lastName')?.touched || userForm.get('lastName')?.dirty)}" />
+                            <label
+                                for="lastName">Apellido(s)</label>
+                        </p-floatlabel>
+                        <small class="error-message-validator" *ngIf="userForm.get('lastName')?.hasError('required') &&
+                        (userForm.get('lastName')?.touched || userForm.get('lastName')?.dirty)">
+                            Apellido(s) de cliente es requerido
+                        </small>
+                    </div>
+                </div>
+
+                 <div class="items-center gap-4 mb-4">
+                     <!-- Address -->
+                    <div class="w-full">
+                        <p-floatlabel variant="in">
+                            <input pInputText id="address" formControlName="address" autocomplete="off" required fluid
+                                [ngClass]="{'ng-invalid ng-dirty': userForm.get('address')?.invalid && (userForm.get('address')?.touched || userForm.get('address')?.dirty)}" />
+                            <label
+                                for="address">Dirección</label>
+                        </p-floatlabel>
+                        <small class="error-message-validator" *ngIf="userForm.get('address')?.hasError('required') &&
+                        (userForm.get('address')?.touched || userForm.get('address')?.dirty)">
+                            Dirección de cliente es requerida
+                        </small>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </ng-template>
+    <ng-template #footer>
+        <hr>
+        <div class="flex justify-end mt-4">
+            <p-button label="Cancelar" severity="danger" icon="pi pi-times" text (click)="HideDialog()" />
+            <p-button label="Guardar" icon="pi pi-check" [disabled]="userForm.invalid"
+                (onClick)="Save()" />
+        </div>
+    </ng-template>
+
+</p-dialog>

@@ -5,3 +5,8 @@
         <p-button *ngIf="viewDeleteButton" severity="danger" label="Eliminar" icon="pi pi-trash" (onClick)="DeleteMultipleUsers($event)" outlined />
     </ng-template>
 </p-toolbar>
+
+<customers-management
+    [(visible)]="sendSeeModal"
+    (visibleChange)="hideModal($event)"
+></customers-management>

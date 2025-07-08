@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ParamsService } from '../ParamsService/Params.service';
 import { Customer } from '../../model/Customers/cutomer.model';
 import { environment } from '../../../environments/environment.development';
+import { CustomerSubmissionDto } from '../../model/Customers/CustomerSubmissionDto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +27,21 @@ export class CustomersService {
     */
     public Get() {
         return this.http.get<[Customer]>(`${environment.baseUrl}/v1/customers`);
+    }
+
+    public GetById(id: number) {
+        return this.http.get<Customer>(`${environment.baseUrl}/v1/customers/${id}`);
+    }
+
+    public Create(request: CustomerSubmissionDto){
+        return this.http.post<Customer>(`${environment.baseUrl}/v1/customers`, request);
+    }
+
+    public Update(id: number, request: CustomerSubmissionDto){
+        return this.http.put<Customer>(`${environment.baseUrl}/v1/customers/${id}`, request);
+    }
+
+    public Delete(id: number) {
+        return this.http.delete(`${environment.baseUrl}/v1/customers/${id}`);
     }
 }

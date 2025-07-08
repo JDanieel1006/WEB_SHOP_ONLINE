@@ -1,5 +1,8 @@
+<p-confirmDialog />
+<p-toast />
 <div class="card">
     <p-table
+        stripedRows
         [value]="customers"
         [paginator]="true"
         [rows]="5"
@@ -11,6 +14,7 @@
                 <th style="width:25%">Nombre</th>
                 <th style="width:25%">Dirección</th>
                 <th style="width:25%">Fecha de creación</th>
+                <th></th>
             </tr>
         </ng-template>
         <ng-template #body let-customer>
@@ -18,6 +22,15 @@
                 <td>{{ customer.name }} {{ customer.lastName }}</td>
                 <td>{{ customer.address }}</td>
                 <td>{{ customer.createdAt | date: 'dd/MM/yyyy' }}</td>
+                <td>
+                    <p-button icon="pi pi-pencil" title="Editar" class="mr-2" [rounded]="true" [outlined]="true" (click)="Edit(customer)" />
+                    <p-button icon="pi pi-trash"  title="Eliminar" class="mr-2" severity="danger" [rounded]="true" [outlined]="true" (click)="ConfirmDelete($event,customer.id)" />
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template #emptymessage>
+            <tr>
+                <td colspan="7">No hay datos registrados.</td>
             </tr>
         </ng-template>
     </p-table>
