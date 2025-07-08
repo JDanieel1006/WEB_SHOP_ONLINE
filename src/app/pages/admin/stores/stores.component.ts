@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { StoreToolbarComponent } from './components/store-toolbar/store-toolbar.component';
 import { MenuItem } from 'primeng/api';
+import { StoreTableComponent } from './components/store-table/store-table.component';
 
 @Component({
   selector: 'app-stores',
-  imports: [Breadcrumb, StoreToolbarComponent],
+  imports: [Breadcrumb, StoreToolbarComponent, StoreTableComponent],
   templateUrl: './stores.component.html',
   styleUrl: './stores.component.scss'
 })

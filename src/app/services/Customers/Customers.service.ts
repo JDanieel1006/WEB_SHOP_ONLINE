@@ -11,8 +11,7 @@ import { CustomerSubmissionDto } from '../../model/Customers/CustomerSubmissionD
 export class CustomersService {
 
     constructor(
-        private http: HttpClient,
-        private paramsService:ParamsService
+        private http: HttpClient
     ) { }
 
     /**
