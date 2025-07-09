@@ -31,12 +31,12 @@ export class ArticleService {
         return this.http.get<ArticleDto>(`${environment.baseUrl}/v1/articles/${id}`);
     }
 
-    public Create(request: ArticleSubmissionDto){
-        return this.http.post<ArticleDto>(`${environment.baseUrl}/v1/articles`, request);
+    public Create(formData: FormData){
+        return this.http.post<ArticleDto>(`${environment.baseUrl}/v1/articles`, formData);
     }
 
-    public Update(id: number, request: ArticleSubmissionDto){
-        return this.http.put<ArticleDto>(`${environment.baseUrl}/v1/articles/${id}`, request);
+    public Update(id: number, formData: FormData){
+        return this.http.put<ArticleDto>(`${environment.baseUrl}/v1/articles/${id}`, formData);
     }
 
     public Delete(id: number) {

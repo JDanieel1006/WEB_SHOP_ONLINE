@@ -1,1 +1,119 @@
-<p>article-management works!</p>
+<p-toast></p-toast>
+
+<p-dialog [(visible)]="visible" [style]="{ width: '450px' }" [modal]="true" closable="false" header="Formulario de articulos">
+    <ng-template #content>
+        <div class="flex flex-col gap-6">
+            <form [formGroup]="userForm" class="p-fluid">
+
+  <!-- code -->
+  <div class="items-center gap-4 mb-4">
+    <div class="w-full">
+      <p-floatlabel variant="in">
+        <input pInputText id="code" formControlName="code" autocomplete="off" required autofocus fluid
+          [ngClass]="{'ng-invalid ng-dirty': userForm.get('code')?.invalid && (userForm.get('code')?.touched || userForm.get('code')?.dirty)}" />
+        <label for="code">Código</label>
+      </p-floatlabel>
+      <small class="error-message-validator" *ngIf="userForm.get('code')?.hasError('required') &&
+        (userForm.get('code')?.touched || userForm.get('code')?.dirty)">
+        Código de producto es requerido
+      </small>
+    </div>
+  </div>
+
+  <!-- description -->
+  <div class="items-center gap-4 mb-4">
+    <div class="w-full">
+      <p-floatlabel variant="in">
+        <input pInputText id="description" formControlName="description" autocomplete="off" required fluid
+          [ngClass]="{'ng-invalid ng-dirty': userForm.get('description')?.invalid && (userForm.get('description')?.touched || userForm.get('description')?.dirty)}" />
+        <label for="description">Descripción</label>
+      </p-floatlabel>
+      <small class="error-message-validator" *ngIf="userForm.get('description')?.hasError('required') &&
+        (userForm.get('description')?.touched || userForm.get('description')?.dirty)">
+        Descripción del artículo es requerida
+      </small>
+    </div>
+  </div>
+
+  <!-- price -->
+  <div class="items-center gap-4 mb-4">
+    <div class="w-full">
+      <p-floatlabel variant="in">
+        <p-inputnumber id="price" formControlName="price" autocomplete="off" required fluid
+          [ngClass]="{'ng-invalid ng-dirty': userForm.get('price')?.invalid && (userForm.get('price')?.touched || userForm.get('price')?.dirty)}" />
+        <label for="price">Precio</label>
+      </p-floatlabel>
+      <small class="error-message-validator" *ngIf="userForm.get('price')?.hasError('required') &&
+        (userForm.get('price')?.touched || userForm.get('price')?.dirty)">
+        Precio del artículo es requerida
+      </small>
+    </div>
+  </div>
+
+  <!-- stock -->
+  <div class="items-center gap-4 mb-4">
+    <div class="w-full">
+      <p-floatlabel variant="in">
+        <p-inputnumber id="stock" formControlName="stock" autocomplete="off" required fluid
+          [ngClass]="{'ng-invalid ng-dirty': userForm.get('stock')?.invalid && (userForm.get('stock')?.touched || userForm.get('stock')?.dirty)}" />
+        <label for="stock">Stock</label>
+      </p-floatlabel>
+      <small class="error-message-validator" *ngIf="userForm.get('stock')?.hasError('required') &&
+        (userForm.get('stock')?.touched || userForm.get('stock')?.dirty)">
+        Stock del artículo es requerido
+      </small>
+    </div>
+  </div>
+
+  <!-- Imagen: Preview + FileUpload -->
+  <div class="items-center gap-4 mb-4">
+    <div class="w-full">
+
+      <!-- Preview: solo muestra si hay imagen existente o nueva -->
+      <div *ngIf="previewUrl" class="mb-3 text-center">
+        <label class="block mb-2 font-semibold">Imagen del artículo</label>
+        <img [src]="previewUrl"
+             alt="Preview de imagen" style="max-width: 250px; border-radius:8px; border:1px solid #e0e0e0; box-shadow:0 1px 6px rgba(0,0,0,0.07);">
+        <div *ngIf="newImageUrl" style="margin-top: 5px;">
+          <button type="button" pButton label="Quitar imagen seleccionada" icon="pi pi-times"
+            class="p-button-rounded p-button-sm p-button-text"
+            (click)="clearSelectedImage()"></button>
+        </div>
+      </div>
+
+      <p-fileupload id="image" name="image"
+        #fu mode="basic" chooseLabel="Elegir imagen"
+        chooseIcon="pi pi-upload"
+        accept="image/*"
+        maxFileSize="10000000"
+        (onSelect)="onFileSelect($event)"
+        [auto]="false">
+      </p-fileupload>
+
+      <!-- Validaciones -->
+      <small class="error-message-validator" *ngIf="userForm.get('image')?.hasError('required') && (userForm.get('image')?.touched || userForm.get('image')?.dirty)">
+        La imagen es obligatoria.
+      </small>
+      <small class="error-message-validator" *ngIf="userForm.get('image')?.hasError('invalidType')">
+        Solo se permiten archivos de imagen (jpg, jpeg, png, gif, webp).
+      </small>
+      <small class="error-message-validator" *ngIf="userForm.get('image')?.hasError('maxSize')">
+        El tamaño máximo permitido es 10MB.
+      </small>
+    </div>
+  </div>
+</form>
+
+
+        </div>
+    </ng-template>
+    <ng-template #footer>
+        <hr>
+        <div class="flex justify-end mt-4">
+            <p-button label="Cancelar" severity="danger" icon="pi pi-times" text (click)="HideDialog()" />
+            <p-button label="Guardar" icon="pi pi-check" [disabled]="userForm.invalid"
+                (onClick)="Save()" />
+        </div>
+    </ng-template>
+
+</p-dialog>
