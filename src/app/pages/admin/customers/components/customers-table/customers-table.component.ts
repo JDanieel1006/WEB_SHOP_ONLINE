@@ -12,6 +12,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { ModelCustomerTransferService } from '../../services/ModelCustomerTransfer';
+import { RefreshTableCustomersService } from '../../services/RefreshTableCustomers.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'customers-table',
@@ -26,6 +28,7 @@ export class CustomersTableComponent {
      * Global variables
     */
     public customers : Customer[] = [];
+    private subscription !: Subscription;
 
     /**
      * Injection of services
@@ -34,11 +37,27 @@ export class CustomersTableComponent {
     private messageService = inject(MessageService);
     private confirmDialogService = inject(ConfirmDialogService);
     private modelTransferService = inject(ModelCustomerTransferService);
+    private refreshTableService = inject(RefreshTableCustomersService);
 
     ngOnInit(): void {
         //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
         //Add 'implements OnInit' to the class.
         this.Get();
+
+        this.subscription = this.refreshTableService.refreshTable$.subscribe( (shouldRefresh) => {
+            if(shouldRefresh){
+                this.Get();
+                this.refreshTableService.resetRefresh();
+            }
+        });
+    }
+
+    ngOnDestroy(): void {
+        //Called once, before the instance is destroyed.
+        //Add 'implements OnDestroy' to the class.
+        if(this.subscription){
+            this.subscription.unsubscribe();
+        }
     }
 
     private Get(){

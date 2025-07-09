@@ -13,6 +13,9 @@ import { ModelCustomerTransferService } from '../../../customers/services/ModelC
 import { ConfirmDialogDto } from '../../../../../model/Shared/Dialog/ConfirmDialogDto.model';
 import { Severity } from '../../../../../enums/Severety/Severity.enum';
 import { ModelStoreTransferService } from '../../services/ModelStoreTransfer.service';
+import { RefreshTableArticleService } from '../../../articles/services/RefreshTableArticle.service';
+import { Subscription } from 'rxjs';
+import { RefreshTableStoresService } from '../../services/RefreshTableStores.service';
 
 @Component({
   selector: 'store-table',
@@ -27,6 +30,7 @@ export class StoreTableComponent {
      * Global variables
     */
     public stores : StoreDto[] = [];
+    private subscription !: Subscription;
 
     /**
      * Injection of services
@@ -35,11 +39,27 @@ export class StoreTableComponent {
     private messageService = inject(MessageService);
     private confirmDialogService = inject(ConfirmDialogService);
     private modelStoreTransferService = inject(ModelStoreTransferService);
+    private refreshTableService = inject(RefreshTableStoresService);
 
     ngOnInit(): void {
         //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
         //Add 'implements OnInit' to the class.
         this.Get();
+
+        this.subscription = this.refreshTableService.refreshTable$.subscribe( (shouldRefresh) => {
+            if(shouldRefresh){
+                this.Get();
+                this.refreshTableService.resetRefresh();
+            }
+        });
+    }
+
+    ngOnDestroy(): void {
+        //Called once, before the instance is destroyed.
+        //Add 'implements OnDestroy' to the class.
+        if(this.subscription){
+            this.subscription.unsubscribe();
+        }
     }
 
     private Get(){

@@ -16,6 +16,7 @@ import { ArticleService } from '../../../../../services/Article/Article.service'
 import { ModelArticleTransferService } from '../../services/ModelArticleTransfer.service';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FileUpload, FileUploadModule } from 'primeng/fileupload';
+import { RefreshTableArticleService } from '../../services/RefreshTableArticle.service';
 
 @Component({
   selector: 'article-management',
@@ -55,6 +56,7 @@ export class ArticleManagementComponent {
     private articleService = inject(ArticleService);
     private messageService = inject(MessageService);
     private modelArticleTransferService = inject(ModelArticleTransferService);
+    private refreshTableService = inject(RefreshTableArticleService);
     private fb = inject(FormBuilder);
 
     constructor() {
@@ -201,6 +203,7 @@ export class ArticleManagementComponent {
                     severity: 'success',
                     summary: `Artículo ${res.code} creado con exito`
                 });
+                this.refreshTableService.triggerRefresh();
                 this.HideDialog();
             },
             error: (error) => {
@@ -233,6 +236,7 @@ export class ArticleManagementComponent {
                     severity: 'success',
                     summary: `Artículo ${res.code} actualizado con éxito`
                 });
+                this.refreshTableService.triggerRefresh();
                 this.HideDialog();
             },
             error: (error) => {

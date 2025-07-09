@@ -15,6 +15,7 @@ import { CustomersService } from '../../../../../services/Customers/Customers.se
 import { CustomerSubmissionDto } from '../../../../../model/Customers/CustomerSubmissionDto.model';
 import { Subscription } from 'rxjs';
 import { ModelCustomerTransferService } from '../../services/ModelCustomerTransfer';
+import { RefreshTableCustomersService } from '../../services/RefreshTableCustomers.service';
 
 @Component({
   selector: 'customers-management',
@@ -48,6 +49,7 @@ export class CustomersManagementComponent {
     private customersService = inject(CustomersService);
     private messageService = inject(MessageService);
     private modelCustomerTransferService = inject(ModelCustomerTransferService);
+    private refreshTableService = inject(RefreshTableCustomersService);
     private fb = inject(FormBuilder);
 
 
@@ -120,7 +122,7 @@ export class CustomersManagementComponent {
                     severity: 'success',
                     summary: `Cliente ${res.name} creado con exito`
                 });
-                //this.refreshTableService.triggerRefresh();
+                this.refreshTableService.triggerRefresh();
                 this.HideDialog();
             },
             error: (error) => {
@@ -146,7 +148,7 @@ export class CustomersManagementComponent {
                     severity: 'success',
                     summary: `Cliente ${res.name} actualizado con exito`
                 });
-                //this.refreshTableService.triggerRefresh();
+                this.refreshTableService.triggerRefresh();
                 this.HideDialog();
             },
             error: (error) => {

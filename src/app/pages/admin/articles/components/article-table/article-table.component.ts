@@ -12,6 +12,8 @@ import { ArticleService } from '../../../../../services/Article/Article.service'
 import { ModelArticleTransferService } from '../../services/ModelArticleTransfer.service';
 import { ConfirmDialogDto } from '../../../../../model/Shared/Dialog/ConfirmDialogDto.model';
 import { Severity } from '../../../../../enums/Severety/Severity.enum';
+import { Subscription } from 'rxjs';
+import { RefreshTableArticleService } from '../../services/RefreshTableArticle.service';
 
 @Component({
   selector: 'article-table',
@@ -26,6 +28,7 @@ export class ArticleTableComponent {
      * Global variables
     */
     public articles : ArticleDto[] = [];
+    private subscription !: Subscription;
 
     /**
      * Injection of services
@@ -34,11 +37,27 @@ export class ArticleTableComponent {
     private messageService = inject(MessageService);
     private confirmDialogService = inject(ConfirmDialogService);
     private modelArticleTransferService = inject(ModelArticleTransferService);
+    private refreshTableService = inject(RefreshTableArticleService);
 
     ngOnInit(): void {
         //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
         //Add 'implements OnInit' to the class.
         this.Get();
+
+        this.subscription = this.refreshTableService.refreshTable$.subscribe( (shouldRefresh) => {
+            if(shouldRefresh){
+                this.Get();
+                this.refreshTableService.resetRefresh();
+            }
+        });
+    }
+
+    ngOnDestroy(): void {
+        //Called once, before the instance is destroyed.
+        //Add 'implements OnDestroy' to the class.
+        if(this.subscription){
+            this.subscription.unsubscribe();
+        }
     }
 
     private Get(){

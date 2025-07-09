@@ -15,6 +15,7 @@ import { Subscription } from 'rxjs';
 import { StoreService } from '../../../../../services/Store/Store.service';
 import { ModelStoreTransferService } from '../../services/ModelStoreTransfer.service';
 import { StoreSubmissionDto } from '../../../../../model/Store/StoreSubmissionDto.model';
+import { RefreshTableStoresService } from '../../services/RefreshTableStores.service';
 
 @Component({
   selector: 'store-management',
@@ -48,6 +49,7 @@ export class StoreManagementComponent {
     private storeService = inject(StoreService);
     private messageService = inject(MessageService);
     private modelStoreTransferService = inject(ModelStoreTransferService);
+    private refreshTableService = inject(RefreshTableStoresService);
     private fb = inject(FormBuilder);
 
 
@@ -56,7 +58,7 @@ export class StoreManagementComponent {
             name: ['', Validators.required],
             address: ['', Validators.required]
         });
-        }
+    }
 
     ngOnInit(): void {
         //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -118,7 +120,7 @@ export class StoreManagementComponent {
                     severity: 'success',
                     summary: `Tienda ${res.name} creada con exito`
                 });
-                //this.refreshTableService.triggerRefresh();
+                this.refreshTableService.triggerRefresh();
                 this.HideDialog();
             },
             error: (error) => {
@@ -143,7 +145,7 @@ export class StoreManagementComponent {
                     severity: 'success',
                     summary: `Cliente ${res.name} actualizado con exito`
                 });
-                //this.refreshTableService.triggerRefresh();
+                this.refreshTableService.triggerRefresh();
                 this.HideDialog();
             },
             error: (error) => {
