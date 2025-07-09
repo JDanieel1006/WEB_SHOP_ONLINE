@@ -9,6 +9,10 @@ export const appRoutes: Routes = [
     component: AppLayout,
     loadChildren: () => import('./app/pages/admin/dashboard-admin.routes')
   },
+  {
+    path: 'store',
+    loadChildren: () => import('./app/pages/store/store.routes')
+  },
   { path: 'notfound', component: NotFoundComponent },
   { path: '**', redirectTo: 'notfound' }
 ];
