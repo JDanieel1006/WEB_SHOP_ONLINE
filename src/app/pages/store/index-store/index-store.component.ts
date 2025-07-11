@@ -52,8 +52,11 @@ export class IndexStoreComponent {
     }
 
     public ViewStore(store: StoreDto) {
-        // Logic to view the store details
         this.router.navigate(['/tienda', store.id]);
+    }
+
+    public goToAdmin(){
+        this.router.navigate(['/dashboard']);
     }
 
 }

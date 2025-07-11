@@ -5,29 +5,15 @@ import { StoreService } from '../../../services/Store/Store.service';
 import { StoreDto } from '../../../model/Store/StoreDto.model';
 import { StoreArticleDto } from '../../../model/Store/StoreArticleDto.model';
 import { forkJoin } from 'rxjs';
-
-interface Shop {
-  id: number;
-  name: string;
-  description: string;
-  image: string;
-  location: string;
-  category: string;
-}
-
-interface ProductfAKE {
-  id: number;
-  name: string;
-  image: string;
-  price: number;
-  description: string;
-  shopId: number;
-}
-
+import { CustomersService } from '../../../services/Customers/Customers.service';
+import { CustomerArticleSubmissionDto } from '../../../model/Customers/CustomerArticleSubmissionDto.model';
+import { CustomerArticleStatus } from '../../../enums/Customer/CustomerArticleStatus';
+import { StoreCartComponent } from '../store-cart/store-cart.component';
+import { CartModalService } from '../services/CartModalService.service';
 
 @Component({
   selector: 'app-store-products',
-  imports: [CommonModule],
+  imports: [CommonModule, StoreCartComponent],
   templateUrl: './store-products.component.html',
   styleUrl: './store-products.component.scss'
 })
@@ -38,15 +24,20 @@ export class StoreProductsComponent {
     */
     public storeId : number = 0;
     public storeDto !: StoreDto;
+    public customerId: number = 1;
     public storeArticleDto : StoreArticleDto[] = [];
+    public addedToCart = new Set<number>();
+    public cartCount : number = 0;
+    public showCart : boolean = false;
 
     /**
      * Injection of services
     */
     private storeService = inject(StoreService);
-    public cartCount : number = 1;
+    private customersService = inject(CustomersService);
+    private cartModalService = inject(CartModalService);
 
-     constructor(private route: ActivatedRoute) {}
+    constructor(private route: ActivatedRoute, private router: Router) {}
 
     ngOnInit(): void {
         this.storeId = Number(this.route.snapshot.paramMap.get('id'));
@@ -56,11 +47,20 @@ export class StoreProductsComponent {
     private loadStoreAndArticles() {
         forkJoin({
             store: this.storeService.GetById(this.storeId),
-            articles: this.storeService.GetArticlesByStore(this.storeId)
+            articles: this.storeService.GetArticlesByStore(this.storeId),
+            articlesByCustomer: this.customersService.GetArticlesByCustomer(this.customerId, CustomerArticleStatus.InCart)
         }).subscribe({
-            next: ({ store, articles }) => {
+            next: ({ store, articles, articlesByCustomer }) => {
                 this.storeDto = store;
                 this.storeArticleDto = articles;
+
+                this.addedToCart.clear();
+                if (articlesByCustomer && Array.isArray(articlesByCustomer)) {
+                    articlesByCustomer.forEach((item: { articleId: number }) => {
+                        this.addedToCart.add(item.articleId);
+                    });
+                }
+                this.cartCount = this.addedToCart.size;
             },
             error: (error) => {
                 console.error('Error fetching store or articles:', error);
@@ -69,10 +69,30 @@ export class StoreProductsComponent {
     }
 
     public GoToCart(){
-
+        this.cartModalService.openCart();
     }
 
-    AddToCart(product: StoreArticleDto) {
-        this.cartCount++;
+    public AddToCart(product: StoreArticleDto) {
+        const request : CustomerArticleSubmissionDto = {
+            articleId: product.articleId,
+            status: CustomerArticleStatus.InCart,
+        };
+        this.customersService.AddArticleToCustomer(this.customerId,request).subscribe({
+            next: (response) => {
+                this.addedToCart.add(product.articleId);
+                this.cartCount++;
+            },
+            error: (error) => {
+                console.error('Error adding article to cart:', error);
+            }
+        })
+    }
+
+    public onCartCheckout() {
+        this.loadStoreAndArticles(); // 👈 Recarga todo
+    }
+
+    public goToStores() {
+         this.router.navigate(['/']);
     }
 }

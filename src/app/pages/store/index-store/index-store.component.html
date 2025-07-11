@@ -5,8 +5,18 @@
             <span class="text-xl font-bold text-indigo-700 tracking-tight">Tiendas en linea</span>
         </div>
         <nav class="hidden md:flex gap-8 text-gray-700 font-semibold">
-            <a href="#" class="hover:text-indigo-700 transition">Inicio</a>
-            <a href="#" class="hover:text-indigo-700 transition">Admin</a>
+            <button type="button"
+                class="hover:text-indigo-700 transition bg-transparent border-none p-0 m-0 font-inherit"
+                style="text-align: inherit;" tabindex="0">
+                Inicio
+            </button>
+
+            <!-- Botón tipo enlace que llama a un método -->
+            <button type="button" (click)="goToAdmin()"
+                class="hover:text-indigo-700 transition bg-transparent border-none p-0 m-0 font-inherit"
+                style="text-align: inherit;">
+                Admin
+            </button>
         </nav>
     </div>
 </header>

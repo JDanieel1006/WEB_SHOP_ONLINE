@@ -1,0 +1,61 @@
+    <p-toast></p-toast>
+    <p-dialog
+      header="Mi Carrito"
+      [(visible)]="showCart"
+      (onHide)="onHide()"
+      [modal]="true"
+      [style]="{ width: '400px', 'border-radius': '1rem' }"
+      [contentStyle]="{ 'padding': '2rem 1.5rem' }"
+      [closable]="true"
+      [dismissableMask]="true"
+      [breakpoints]="{'640px': '95vw', '1024px': '50vw'}"
+    >
+      <ng-template pTemplate="header">
+        <span class="flex items-center gap-2">
+          <i class="pi pi-shopping-cart text-indigo-700"></i>
+          <span class="font-bold text-indigo-700">Mi Carrito</span>
+        </span>
+      </ng-template>
+
+      <div *ngIf="cartArticles.length > 0; else emptyCart" class="flex flex-col gap-5 max-h-80 overflow-y-auto">
+        <div *ngFor="let art of cartArticles" class="flex items-center gap-4 border-b pb-4 last:border-b-0">
+          <i class="pi pi-box text-2xl text-indigo-400"></i>
+          <div class="flex-1">
+            <div class="font-semibold text-gray-900 truncate">{{ art.articleDescription }}</div>
+            <div class="text-gray-500 text-sm">
+              Código: {{ art.articleCode }}
+            </div>
+            <div class="text-indigo-700 text-md font-bold">
+              {{ art.articlePrice | currency:'MXN' }}
+            </div>
+          </div>
+          <button pButton type="button" icon="pi pi-trash"
+            class="p-button-rounded p-button-text p-button-danger"
+            (click)="removeFromCart(art)" aria-label="Quitar"></button>
+        </div>
+      </div>
+      <ng-template #emptyCart>
+        <div class="text-center text-gray-400 py-8">
+          <i class="pi pi-inbox text-4xl mb-2"></i>
+          <div>Tu carrito está vacío.</div>
+        </div>
+      </ng-template>
+
+      <div class="mt-6 flex flex-col gap-3">
+        <div class="flex justify-between items-center text-lg font-semibold">
+          <span>Total artículos:</span>
+          <span class="text-indigo-700">{{ cartArticles.length }}</span>
+        </div>
+        <div class="flex justify-between items-center text-lg font-semibold">
+          <span>Total a pagar:</span>
+          <span class="text-green-700 font-extrabold">{{ cartTotal | currency:'MXN' }}</span>
+        </div>
+        <button
+          pButton
+          label="Finalizar compra"
+          class="p-button-lg p-button-success w-full mt-2"
+          [disabled]="cartArticles.length === 0"
+          (click)="onCheckout()"
+        ></button>
+      </div>
+    </p-dialog>

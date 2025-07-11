@@ -41,16 +41,16 @@ export class StoreService {
         return this.http.get<[StoreArticleDto]>(`${environment.baseUrl}/v1/stores/${storeId}/articles`);
     }
 
-    public Create(request: StoreSubmissionDto){
-        return this.http.post<StoreDto>(`${environment.baseUrl}/v1/stores`, request);
+    public Create(formData: FormData){
+        return this.http.post<StoreDto>(`${environment.baseUrl}/v1/stores`, formData);
     }
 
     public AddArticleToStore(storeId: number, request: StoreArticleSubmissionDto){
         return this.http.post<StoreArticleDto>(`${environment.baseUrl}/v1/stores/${storeId}/articles`, request);
     }
 
-    public Update(id: number, request: StoreSubmissionDto){
-        return this.http.put<StoreDto>(`${environment.baseUrl}/v1/stores/${id}`, request);
+    public Update(id: number, formData: FormData){
+        return this.http.put<StoreDto>(`${environment.baseUrl}/v1/stores/${id}`, formData);
     }
 
     public Delete(id: number) {
