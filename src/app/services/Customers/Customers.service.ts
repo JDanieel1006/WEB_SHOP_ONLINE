@@ -6,6 +6,7 @@ import { CustomerSubmissionDto } from '../../model/Customers/CustomerSubmissionD
 import { CustomerArticleDto } from '../../model/Customers/CustomerArticleDto.mode';
 import { CustomerArticleSubmissionDto } from '../../model/Customers/CustomerArticleSubmissionDto.model';
 import { CustomerArticleStatus } from '../../enums/Customer/CustomerArticleStatus';
+import { CustomerLoginSubmissionDto } from '../../model/Customers/CustomerLoginSubmissionDto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,16 +17,10 @@ export class CustomersService {
         private http: HttpClient
     ) { }
 
-    /**
-     * Retrieves a paginated list of registered customers.
-     *
-     * @returns Observable that emits a paginated response containing Customer.
-     *
-     * ### API Responses:
-     * - 200 OK: Returns a paginated list of customers.
-     * - 400 Bad Request: The request contains invalid parameters.
-     * - 401 Unauthorized: The user is not authenticated.
-    */
+    public Login(request: CustomerLoginSubmissionDto){
+        return this.http.post<{ token: string }>(`${environment.baseUrl}/v1/customers/login`, request);
+    }
+
     public Get() {
         return this.http.get<[Customer]>(`${environment.baseUrl}/v1/customers`);
     }

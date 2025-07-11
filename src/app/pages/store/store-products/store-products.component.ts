@@ -99,12 +99,12 @@ export class StoreProductsComponent {
     }
 
     public goToStores() {
-         this.router.navigate(['/']);
+         this.router.navigate(['/indexStore']);
     }
 
     get cartArticles(): StoreArticleDto[] {
         return Array.from(this.addedToCart)
         .map(id => this.storeArticleDto.find(article => article.articleId === id))
-        .filter(Boolean) as StoreArticleDto[]; // Elimina undefined
+        .filter(Boolean) as StoreArticleDto[];
     }
 }

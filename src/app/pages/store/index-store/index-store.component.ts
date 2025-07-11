@@ -52,7 +52,7 @@ export class IndexStoreComponent {
     }
 
     public ViewStore(store: StoreDto) {
-        this.router.navigate(['/tienda', store.id]);
+        this.router.navigate(['/store', store.id]);
     }
 
     public goToAdmin(){

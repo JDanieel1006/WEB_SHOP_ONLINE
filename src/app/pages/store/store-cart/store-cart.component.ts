@@ -39,7 +39,6 @@ export class StoreCartComponent {
         this.subscription.add(
             this.cartModalService.showCart$.subscribe(val => this.showCart = val)
         );
-        console.log(this.cartArticles)
     }
 
     ngOnDestroy() {

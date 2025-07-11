@@ -1,6 +1,9 @@
 import { Routes } from "@angular/router";
 import { IndexStoreComponent } from "./index-store/index-store.component";
 import { StoreProductsComponent } from "./store-products/store-products.component";
+import { AuthComponent } from "./auth/auth.component";
+import { AuthGuard } from "../../guards/auth.guard";
+import { RegisterComponent } from "./register/register.component";
 
 export const storeRoutes: Routes = [
     {
@@ -10,11 +13,21 @@ export const storeRoutes: Routes = [
     },
     {
         path: 'index',
-        component: IndexStoreComponent
+        component: AuthComponent
     },
     {
-        path: 'tienda/:id',
-        component: StoreProductsComponent
+        path: 'indexStore',
+        component: IndexStoreComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'store/:id',
+        component: StoreProductsComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'register',
+        component: RegisterComponent,
     }
 ];
 
