@@ -28,7 +28,6 @@ export class AuthComponent {
     */
     private customersService = inject(CustomersService);
 
-
     constructor(private router: Router) {}
 
     public onLogin() {
@@ -38,6 +37,23 @@ export class AuthComponent {
         }
         this.customersService.Login(request).subscribe({
             next: (response) => {
+
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    return;
+                }
+                const payload = token.split('.')[1];
+                if (!payload) {
+                    return;
+                }
+                const decodedPayload = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
+                const payloadObj = JSON.parse(decodedPayload);
+
+                const userId = payloadObj.nameid;
+
+                if (userId) {
+                    localStorage.setItem('userId', userId);
+                }
                 localStorage.setItem('token', response.token);
                 this.router.navigate(['/indexStore']);
             },
@@ -49,5 +65,9 @@ export class AuthComponent {
 
     public goToRegister(){
         this.router.navigate(['/register']);
+    }
+
+    public goToAdminLogin() {
+        this.router.navigate(['/admin']);
     }
 }

@@ -23,7 +23,7 @@ export class StoreCartComponent {
     @Input() public cartArticles: StoreArticleDto[] = [];
     @Input() public showCart : boolean = false;
     @Input() public storeId: number = 0;
-    @Input() public customerId: number = 1;
+    @Input() public customerId: number = 0;
     @Output() public checkout = new EventEmitter<void>();
     @Output() public articleRemoved = new EventEmitter<StoreArticleDto>();
 
@@ -39,6 +39,7 @@ export class StoreCartComponent {
         this.subscription.add(
             this.cartModalService.showCart$.subscribe(val => this.showCart = val)
         );
+        this.customerId = parseInt(localStorage.getItem('userId') || '1', 10);
     }
 
     ngOnDestroy() {

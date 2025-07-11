@@ -3,6 +3,8 @@ import { HomeComponent } from "./home/home.component";
 import { CustomersComponent } from './customers/customers.component';
 import { StoresComponent } from "./stores/stores.component";
 import { ArticlesComponent } from "./articles/articles.component";
+import { AuthAdminComponent } from "./auth-admin/auth-admin.component";
+import { authAdminGuard } from "../../guards/auth-admin.guard";
 
 
 export const dashboardAdminRoutes: Routes = [
@@ -13,19 +15,23 @@ export const dashboardAdminRoutes: Routes = [
     },
     {
         path: 'home',
-        component: HomeComponent
+        component: HomeComponent,
+        canActivate: [authAdminGuard]
     },
     {
         path: 'customers',
-        component: CustomersComponent
+        component: CustomersComponent,
+        canActivate: [authAdminGuard]
     },
     {
         path: 'stores',
-        component: StoresComponent
+        component: StoresComponent,
+        canActivate: [authAdminGuard]
     },
     {
         path: 'articles',
-        component: ArticlesComponent
+        component: ArticlesComponent,
+        canActivate: [authAdminGuard]
     },
 ];
 

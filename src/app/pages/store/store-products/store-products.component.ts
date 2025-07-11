@@ -24,7 +24,7 @@ export class StoreProductsComponent {
     */
     public storeId : number = 0;
     public storeDto !: StoreDto;
-    public customerId: number = 1;
+    public customerId: number = 0;
     public storeArticleDto : StoreArticleDto[] = [];
     public addedToCart = new Set<number>();
     public cartCount : number = 0;
@@ -40,6 +40,7 @@ export class StoreProductsComponent {
     constructor(private route: ActivatedRoute, private router: Router) {}
 
     ngOnInit(): void {
+        this.customerId = parseInt(localStorage.getItem('userId') || '1', 10);
         this.storeId = Number(this.route.snapshot.paramMap.get('id'));
         this.loadStoreAndArticles();
     }

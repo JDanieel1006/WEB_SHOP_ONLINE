@@ -8,9 +8,8 @@ export class AuthGuard implements CanActivate {
   canActivate(): boolean | UrlTree {
     const token = localStorage.getItem('token');
     if (token) {
-      return true; // ✅ Usuario autenticado
+      return true;
     }
-    // 🚫 No autenticado: redirige al login
     return this.router.createUrlTree(['/login']);
   }
 }
