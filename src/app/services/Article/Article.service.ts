@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { ArticleDto } from '../../model/Article/ArticleDto.model';
 import { environment } from '../../../environments/environment.development';
 import { ArticleSubmissionDto } from '../../model/Article/ArticleSubmissionDto.model';
+import { StoreArticleSubmissionDto } from '../../model/Store/StoreArticleSubmissionDto.model';
+import { StoreArticleDto } from '../../model/Store/StoreArticleDto.model';
 
 @Injectable({
   providedIn: 'root'

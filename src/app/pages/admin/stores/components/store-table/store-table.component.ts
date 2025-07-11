@@ -9,17 +9,16 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogService } from '../../../../../services/ConfirmDialogService/ConfirmDialog.service';
 import { StoreDto } from '../../../../../model/Store/StoreDto.model';
 import { StoreService } from '../../../../../services/Store/Store.service';
-import { ModelCustomerTransferService } from '../../../customers/services/ModelCustomerTransfer';
 import { ConfirmDialogDto } from '../../../../../model/Shared/Dialog/ConfirmDialogDto.model';
 import { Severity } from '../../../../../enums/Severety/Severity.enum';
 import { ModelStoreTransferService } from '../../services/ModelStoreTransfer.service';
-import { RefreshTableArticleService } from '../../../articles/services/RefreshTableArticle.service';
 import { Subscription } from 'rxjs';
 import { RefreshTableStoresService } from '../../services/RefreshTableStores.service';
+import { StoreArticlesComponent } from '../store-articles/store-articles.component';
 
 @Component({
   selector: 'store-table',
-  imports: [TableModule, CommonModule, ButtonModule, ConfirmDialogModule, TagModule, ToastModule],
+  imports: [TableModule, CommonModule, ButtonModule, ConfirmDialogModule, TagModule, ToastModule,StoreArticlesComponent],
   providers: [ConfirmationService, ConfirmDialogService, MessageService],
   templateUrl: './store-table.component.html',
   styleUrl: './store-table.component.scss'
@@ -30,6 +29,7 @@ export class StoreTableComponent {
      * Global variables
     */
     public stores : StoreDto[] = [];
+    public severity = Severity;
     private subscription !: Subscription;
 
     /**
@@ -71,6 +71,10 @@ export class StoreTableComponent {
                 console.error('Error fetching customers:', error);
             }
         });
+    }
+
+    public ProductAllocation(customer: StoreDto) {
+        this.modelStoreTransferService.triggerNumberRefresh(customer.id);
     }
 
     public Edit(customer: StoreDto) {

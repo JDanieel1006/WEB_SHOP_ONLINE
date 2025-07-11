@@ -10,7 +10,7 @@ export const appRoutes: Routes = [
     loadChildren: () => import('./app/pages/admin/dashboard-admin.routes')
   },
   {
-    path: 'store',
+    path: '',
     loadChildren: () => import('./app/pages/store/store.routes')
   },
   { path: 'notfound', component: NotFoundComponent },

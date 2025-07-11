@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { StoreDto } from '../../model/Store/StoreDto.model';
 import { StoreSubmissionDto } from '../../model/Store/StoreSubmissionDto.model';
 import { environment } from '../../../environments/environment.development';
+import { StoreArticleDto } from '../../model/Store/StoreArticleDto.model';
+import { StoreArticleSubmissionDto } from '../../model/Store/StoreArticleSubmissionDto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +33,20 @@ export class StoreService {
         return this.http.get<StoreDto>(`${environment.baseUrl}/v1/stores/${id}`);
     }
 
+    public GetStoreArticle(storeId: number, articleId: number){
+        return this.http.get<StoreArticleDto>(`${environment.baseUrl}/v1/stores/${storeId}/articles/${articleId}`);
+    }
+
+    public GetArticlesByStore(storeId: number){
+        return this.http.get<[StoreArticleDto]>(`${environment.baseUrl}/v1/stores/${storeId}/articles`);
+    }
+
     public Create(request: StoreSubmissionDto){
         return this.http.post<StoreDto>(`${environment.baseUrl}/v1/stores`, request);
+    }
+
+    public AddArticleToStore(storeId: number, request: StoreArticleSubmissionDto){
+        return this.http.post<StoreArticleDto>(`${environment.baseUrl}/v1/stores/${storeId}/articles`, request);
     }
 
     public Update(id: number, request: StoreSubmissionDto){
