@@ -39,6 +39,7 @@ export class StoreCartComponent {
         this.subscription.add(
             this.cartModalService.showCart$.subscribe(val => this.showCart = val)
         );
+        console.log(this.cartArticles)
     }
 
     ngOnDestroy() {
@@ -50,8 +51,6 @@ export class StoreCartComponent {
     }
 
     public onCheckout() {
-
-
         const articles: SaleArticleSubmissionDto[] = this.cartArticles.map(art => ({
             articleId: art.articleId,
             quantity: 1,
@@ -84,7 +83,7 @@ export class StoreCartComponent {
     }
 
     public onHide() {
-        this.cartModalService.closeCart(); // Para mantener el estado en sync si cierras manualmente
+        this.cartModalService.closeCart();
     }
 
     get cartTotal(): number {

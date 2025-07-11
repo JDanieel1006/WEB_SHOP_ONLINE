@@ -69,6 +69,7 @@ export class StoreProductsComponent {
     }
 
     public GoToCart(){
+        console.log('Cart opened', this.storeArticleDto);
         this.cartModalService.openCart();
     }
 
@@ -85,14 +86,25 @@ export class StoreProductsComponent {
             error: (error) => {
                 console.error('Error adding article to cart:', error);
             }
-        })
+        });
     }
 
     public onCartCheckout() {
-        this.loadStoreAndArticles(); // 👈 Recarga todo
+        this.storeArticleDto = [];
+        this.cartCount = 0;
+        this.addedToCart.clear();
+        this.storeArticleDto = [];
+
+        this.loadStoreAndArticles();
     }
 
     public goToStores() {
          this.router.navigate(['/']);
+    }
+
+    get cartArticles(): StoreArticleDto[] {
+        return Array.from(this.addedToCart)
+        .map(id => this.storeArticleDto.find(article => article.articleId === id))
+        .filter(Boolean) as StoreArticleDto[]; // Elimina undefined
     }
 }
